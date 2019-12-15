@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/filter"
+        android:title="@string/filter"
+        android:icon="@drawable/filter_icon"/>
+    <item
+        android:id="@+id/map"
+        android:title="@string/map"
+        android:icon="@drawable/map_icon"/>
+    <item
+        android:id="@+id/edit"
+        android:title="@string/edit"
+        android:icon="@drawable/edit_icon"
+        />
+</menu>
