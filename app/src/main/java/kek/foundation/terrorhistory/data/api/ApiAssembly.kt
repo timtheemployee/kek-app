@@ -6,6 +6,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class ApiAssembly(private val endPoint: String) {
 
@@ -15,9 +18,13 @@ class ApiAssembly(private val endPoint: String) {
                 url = endPoint,
                 client = createHttpClient(interceptor = createLoggingInterceptor()),
                 converterFactory = createGsonConverterFactory(gson = createGson()),
+                executor = createExecutor(),
                 api = Api::class.java
             )
 
+
+    private fun createExecutor(): Executor =
+        Executors.newCachedThreadPool()
 
     private fun createGson(): Gson =
         Gson()
@@ -32,6 +39,8 @@ class ApiAssembly(private val endPoint: String) {
 
     private fun createHttpClient(interceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder()
+            .connectTimeout(10000, TimeUnit.MILLISECONDS)
+            .readTimeout(10000, TimeUnit.MILLISECONDS)
             .addInterceptor(interceptor)
             .build()
 
@@ -39,12 +48,14 @@ class ApiAssembly(private val endPoint: String) {
         url: String,
         client: OkHttpClient,
         converterFactory: GsonConverterFactory,
+        executor: Executor,
         api: Class<T>
     ): T =
         Retrofit.Builder()
             .baseUrl(url)
             .client(client)
             .addConverterFactory(converterFactory)
+            .callbackExecutor(executor)
             .build()
             .create(api)
 }

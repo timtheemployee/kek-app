@@ -7,33 +7,36 @@ import androidx.fragment.app.Fragment
 import kek.foundation.terrorhistory.R
 import kek.foundation.terrorhistory.data.api.Api
 import kek.foundation.terrorhistory.data.countries.Country
+import kek.foundation.terrorhistory.presentation.filter.FilterItem
+import kek.foundation.terrorhistory.presentation.filter.FilterPresenter
+import kek.foundation.terrorhistory.presentation.filter.FilterView
 import kek.foundation.terrorhistory.ui.BaseFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FilterFragment: BaseFragment() {
+class FilterFragment: BaseFragment(), FilterView {
 
     companion object {
         fun newInstance(): Fragment = FilterFragment()
     }
 
     override val layout = R.layout.filter_fragment
-    lateinit var api: Api
+
+    lateinit var presenter: FilterPresenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Thread {
-            api.getCountries().enqueue(object: Callback<List<Country>> {
-                override fun onFailure(call: Call<List<Country>>, t: Throwable) {
-                    Log.e("Tag", "${t.printStackTrace()}")
-                }
+        presenter.attachView(this)
+    }
 
-                override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
-                    Log.e("Tag", "${response.body()}")
-                }
-            })
-        }.start()
+    override fun updateFiltersList(items: List<FilterItem>) {
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.detachView()
     }
 }

@@ -5,12 +5,13 @@ import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kek.foundation.terrorhistory.data.api.ApiAssembly
+import kek.foundation.terrorhistory.presentation.PresentationAssembly
 
 class MainActivityLifeCycleInjector(
-    apiAssembly: ApiAssembly
+    presentationAssembly: PresentationAssembly
 ) : Application.ActivityLifecycleCallbacks {
 
-    private val filterInjector = FilterFragmentLifecycleInjector(api = apiAssembly.api)
+    private val filterInjector = FragmentLifecycleInjector(presentationAssembly.filterPresenter)
 
     override fun onActivityPaused(activity: Activity) {
     }
