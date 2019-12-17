@@ -45,7 +45,6 @@ class FilterFragment: BaseFragment(), FilterView {
 
     override fun updateFiltersList(items: List<FilterItem>) {
         requireActivity().runOnUiThread {
-            Log.e("TAG","ITEMS SIZE -> ${items.size}")
             filterAdapter.items = items
         }
     }

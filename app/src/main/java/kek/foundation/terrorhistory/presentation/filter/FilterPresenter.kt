@@ -24,7 +24,10 @@ class FilterPresenter(
     private var filter = interactor.getFilter()
 
     override fun onFirstViewAttach() {
-        Log.e("TAG", "Called second")
+        Log.e("TAG", "Called On First View Attach $this")
+
+        filterItems.clear()
+        
         interactor.getRegions(
             success = {
                 filterItems.add(RegionsItem(it))
