@@ -3,4 +3,9 @@
     <string name="filter">Фильтр</string>
     <string name="map">Карта</string>
     <string name="edit">Редактирование</string>
+    <string name="countries">Страны</string>
+    <string name="attack_type">Способ атаки</string>
+    <string name="group">Террористическая группа</string>
+    <string name="regions">Регионы</string>
+    <string name="target_type">Предмет атаки</string>
 </resources>

@@ -1,5 +1,10 @@
 package kek.foundation.terrorhistory.presentation.filter
 
+import android.util.Log
+import kek.foundation.terrorhistory.data.attacktypes.AttackType
+import kek.foundation.terrorhistory.data.countries.Country
+import kek.foundation.terrorhistory.data.groups.Group
+import kek.foundation.terrorhistory.data.region.Region
 import kek.foundation.terrorhistory.data.targettypes.TargetType
 import kek.foundation.terrorhistory.domain.filter.FilterInteractor
 import kek.foundation.terrorhistory.presentation.BasePresenter
@@ -16,34 +21,76 @@ class FilterPresenter(
 ) : BasePresenter<FilterView>() {
 
     private var filterItems = arrayListOf<FilterItem>()
-        set(value) {
-            field = value
-            view?.updateFiltersList(value)
-        }
 
     override fun onFirstViewAttach() {
         interactor.getRegions(
-            success = { filterItems.add(RegionsItem(it)) },
+            success = {
+                filterItems.add(RegionsItem(it))
+                view?.updateFiltersList(filterItems)
+            },
             error = {}
         )
 
         interactor.getCountries(
-            success = { filterItems.add(CountriesItem(it)) },
+            success = {
+                filterItems.add(CountriesItem(it))
+                view?.updateFiltersList(filterItems)
+            },
             error = { /*do nothing */ })
 
         interactor.getAttackTypes(
-            success = { filterItems.add(AttackTypesItem(it)) },
+            success = {
+                filterItems.add(AttackTypesItem(it))
+                view?.updateFiltersList(filterItems)
+            },
             error = { }
         )
 
         interactor.getGroups(
-            success = { filterItems.add(GroupsItem(it))},
+            success = {
+                filterItems.add(GroupsItem(it))
+                view?.updateFiltersList(filterItems)
+            },
             error = {}
         )
 
         interactor.getTargetTypes(
-            success = { filterItems.add(TargetTypesItem(it)) },
+            success = {
+                filterItems.add(TargetTypesItem(it))
+                view?.updateFiltersList(filterItems)
+            },
             error = {}
         )
     }
+
+    fun onCountryClicked(country: Country) {
+        val countriesItem = filterItems.first { it is CountriesItem } as CountriesItem
+        countriesItem.selected.add(country)
+        view?.updateFiltersList(filterItems)
+    }
+
+    fun onRegionClicked(region: Region) {
+        val regionsItem = filterItems.first { it is RegionsItem } as RegionsItem
+        regionsItem.selected.add(region)
+        view?.updateFiltersList(filterItems)
+    }
+
+    fun onGroupClicked(group: Group) {
+        val groupsItem = filterItems.first{ it is GroupsItem } as GroupsItem
+        groupsItem.selected.add(group)
+        view?.updateFiltersList(filterItems)
+    }
+
+    fun onTargetTypeClicked(targetType: TargetType) {
+        val targetTypesItem = filterItems.first { it is TargetTypesItem } as TargetTypesItem
+        targetTypesItem.selected.add(targetType)
+        view?.updateFiltersList(filterItems)
+    }
+
+    fun onAttackTypeClicked(attackType: AttackType) {
+        val attackTypesItem = filterItems.first { it is AttackTypesItem } as AttackTypesItem
+        attackTypesItem.selected.add(attackType)
+        view?.updateFiltersList(filterItems)
+    }
+
 }

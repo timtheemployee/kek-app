@@ -8,12 +8,12 @@ import kek.foundation.terrorhistory.data.targettypes.TargetType
 
 sealed class FilterItem
 
-class CountriesItem(val countries: List<Country>): FilterItem()
+class CountriesItem(val countries: List<Country>, val selected: MutableSet<Country> = mutableSetOf()): FilterItem()
 
-class AttackTypesItem(val attackTypes: List<AttackType>): FilterItem()
+class AttackTypesItem(val attackTypes: List<AttackType>, val selected: MutableSet<AttackType> = mutableSetOf()): FilterItem()
 
-class GroupsItem(val groups: List<Group>): FilterItem()
+class GroupsItem(val groups: List<Group>, val selected: MutableSet<Group> = mutableSetOf()): FilterItem()
 
-class RegionsItem(val regions: List<Region>): FilterItem()
+class RegionsItem(val regions: List<Region>, val selected: MutableSet<Region> = mutableSetOf()): FilterItem()
 
-class TargetTypesItem(val targetTypes: List<TargetType>): FilterItem()
+class TargetTypesItem(val targetTypes: List<TargetType>, val selected: MutableSet<TargetType> = mutableSetOf()): FilterItem()

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_16"
+    android:elevation="@dimen/spacing_8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sectorTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Headline"
+            tools:text="Title"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:paddingTop="@dimen/spacing_8"
+            android:paddingBottom="@dimen/spacing_8"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sectorsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/sector_item"
+            android:paddingBottom="@dimen/spacing_8"/>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
