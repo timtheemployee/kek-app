@@ -52,6 +52,7 @@ class FilterFragment: BaseFragment(), FilterView {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        presenter.saveFilter()
         presenter.detachView()
     }
 }

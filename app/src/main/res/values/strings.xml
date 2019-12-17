@@ -8,4 +8,6 @@
     <string name="group">Террористическая группа</string>
     <string name="regions">Регионы</string>
     <string name="target_type">Предмет атаки</string>
+    
+    <string name="map_box_token">pk.eyJ1IjoidGltYnlzdHJvdiIsImEiOiJjazQ5Nml3Zm4wMWpxM2ttN3kwZzE0M2c0In0.pkJjj6tUhUKRJBFRo36xag</string>
 </resources>

@@ -4,11 +4,11 @@ data class Filter(
     val minYear: Int? = null,
     val maxYear: Int? = null,
     val isExtended: Boolean? = null,
-    val countries: List<Int>? = null,
-    val regions: List<Int>? = null,
+    val countries: List<Long>? = null,
+    val regions: List<Long>? = null,
     val isSuccess: Boolean? = null,
     val isSuicide: Boolean? = null,
-    val attackTypes: List<Int>? = null,
-    val targetTypes: List<Int>? = null,
-    val groups: List<Int>? = null
+    val attackTypes: List<Long>? = null,
+    val targetTypes: List<Long>? = null,
+    val groups: List<Long>? = null
 )

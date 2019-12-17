@@ -61,6 +61,10 @@ class MainFragment : BaseFragment() {
     }
 
     private fun Fragment.showFragment(fragment: Fragment) {
+        while(childFragmentManager.backStackEntryCount > 0) {
+            childFragmentManager.popBackStack()
+        }
+
         childFragmentManager
             .beginTransaction()
             .replace(R.id.contentLayout, fragment, getTag(fragment))

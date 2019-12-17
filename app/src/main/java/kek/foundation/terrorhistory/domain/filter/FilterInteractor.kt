@@ -2,6 +2,7 @@ package kek.foundation.terrorhistory.domain.filter
 
 import kek.foundation.terrorhistory.data.attacktypes.AttackType
 import kek.foundation.terrorhistory.data.countries.Country
+import kek.foundation.terrorhistory.data.filter.Filter
 import kek.foundation.terrorhistory.data.groups.Group
 import kek.foundation.terrorhistory.data.region.Region
 import kek.foundation.terrorhistory.data.targettypes.TargetType
@@ -12,7 +13,8 @@ class FilterInteractor(
     private val attackTypeRepository: AttackTypeRepository,
     private val groupsRepository: GroupsRepository,
     private val regionsRepository: RegionsRepository,
-    private val targetTypesRepository: TargetTypesRepository
+    private val targetTypesRepository: TargetTypesRepository,
+    private val filterRepository: FilterRepository
 ) {
 
     fun getCountries(success: (List<Country>) -> Unit,
@@ -59,4 +61,11 @@ class FilterInteractor(
             error
         )
     }
+
+    fun updateFilter(filter: Filter) {
+        filterRepository.filter = filter
+    }
+
+    fun getFilter(): Filter =
+        filterRepository.filter
 }

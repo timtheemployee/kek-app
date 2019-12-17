@@ -21,8 +21,10 @@ class FilterPresenter(
 ) : BasePresenter<FilterView>() {
 
     private var filterItems = arrayListOf<FilterItem>()
+    private var filter = interactor.getFilter()
 
     override fun onFirstViewAttach() {
+        Log.e("TAG", "Called second")
         interactor.getRegions(
             success = {
                 filterItems.add(RegionsItem(it))
@@ -65,32 +67,85 @@ class FilterPresenter(
 
     fun onCountryClicked(country: Country) {
         val countriesItem = filterItems.first { it is CountriesItem } as CountriesItem
-        countriesItem.selected.add(country)
+
+        countriesItem.selected.apply {
+            add(country)
+
+            val list = toList()
+                .map { it.id }
+
+            if(list.isNotEmpty()) {
+                filter = filter.copy(countries = list)
+            }
+        }
+
         view?.updateFiltersList(filterItems)
     }
 
     fun onRegionClicked(region: Region) {
         val regionsItem = filterItems.first { it is RegionsItem } as RegionsItem
-        regionsItem.selected.add(region)
+        regionsItem.selected.apply {
+            add(region)
+
+            val list = toList()
+                .map { it.id }
+
+            if(list.isNotEmpty()) {
+                filter = filter.copy(regions = list)
+            }
+        }
         view?.updateFiltersList(filterItems)
     }
 
     fun onGroupClicked(group: Group) {
         val groupsItem = filterItems.first{ it is GroupsItem } as GroupsItem
-        groupsItem.selected.add(group)
+        groupsItem.selected.apply {
+            add(group)
+
+            val list = toList()
+                .map { it.id }
+
+            if(list.isNotEmpty()) {
+                filter = filter.copy(groups = list)
+            }
+        }
         view?.updateFiltersList(filterItems)
     }
 
     fun onTargetTypeClicked(targetType: TargetType) {
         val targetTypesItem = filterItems.first { it is TargetTypesItem } as TargetTypesItem
-        targetTypesItem.selected.add(targetType)
+        targetTypesItem.selected.apply {
+            add(targetType)
+
+            val list = toList()
+                .map { it.id }
+
+            if(list.isNotEmpty()) {
+                filter = filter.copy(groups = list)
+            }
+        }
         view?.updateFiltersList(filterItems)
     }
 
     fun onAttackTypeClicked(attackType: AttackType) {
         val attackTypesItem = filterItems.first { it is AttackTypesItem } as AttackTypesItem
-        attackTypesItem.selected.add(attackType)
+        attackTypesItem.selected.apply {
+            add(attackType)
+
+            val list = toList()
+                .map { it.id }
+
+            if(list.isNotEmpty()) {
+                filter = filter.copy(attackTypes = list)
+            }
+        }
+
+
         view?.updateFiltersList(filterItems)
+    }
+
+    fun saveFilter() {
+        Log.e("TAG", "Saving filters here")
     }
 
 }

@@ -13,6 +13,7 @@ class InteractorAssembly(
             repositoryAssembly.attackTypeRepository,
             repositoryAssembly.groupsRepository,
             repositoryAssembly.regionsRepository,
-            repositoryAssembly.targetTypesRepository
+            repositoryAssembly.targetTypesRepository,
+            RepositoryAssembly.filterRepository
         )
 }
