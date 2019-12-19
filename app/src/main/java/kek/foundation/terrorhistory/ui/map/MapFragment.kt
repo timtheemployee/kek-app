@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.algo.GridBasedAlgorithm
 import com.google.maps.android.clustering.algo.PreCachingAlgorithmDecorator
 import kek.foundation.terrorhistory.R
 import kek.foundation.terrorhistory.data.events.Event
@@ -59,6 +61,8 @@ class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback {
                 }
                 .toList()
                 .let(cluster::addItems)
+
+            cluster.cluster()
         }
     }
 
@@ -73,9 +77,10 @@ class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap?) {
         require(map != null) { IllegalArgumentException("Map is not initialized") }
         googleMap = map
-
         cluster = ClusterManager(requireContext(), map)
         cluster.setAnimation(true)
+
+        cluster.algorithm = PreCachingAlgorithmDecorator(GridBasedAlgorithm<EventItem>())
         cluster.setOnClusterItemClickListener {
             presenter.onMarkerClicked(it)
             true
@@ -119,5 +124,14 @@ class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback {
         groupView.text = target.group
 
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    override fun showEmptyListError() {
+        progress.isVisible = false
+        Snackbar.make(
+            progress,
+            "Кажется ничего не найдено, попробуйте обновить фильтры",
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }

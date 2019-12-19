@@ -11,6 +11,7 @@ interface FilterMapView : BaseView {
     fun updateEvents(events: List<Event>)
     fun showLoadingError()
     fun showEvent(target: Event)
+    fun showEmptyListError()
 }
 
 class MapPresenter(
@@ -22,9 +23,13 @@ class MapPresenter(
     override fun onFirstViewAttach() {
 
         mapInteractor.getEvents(success = {
-            view?.updateEvents(it)
-            events.clear()
-            events.addAll(it)
+            if(it.isNotEmpty()) {
+                view?.updateEvents(it)
+                events.clear()
+                events.addAll(it)
+            } else {
+                view?.showEmptyListError()
+            }
         }, error = {
             view?.showLoadingError()
         })
