@@ -11,6 +11,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.algo.PreCachingAlgorithmDecorator
 import kek.foundation.terrorhistory.R
 import kek.foundation.terrorhistory.data.events.Event
 import kek.foundation.terrorhistory.presentation.map.FilterMapView
@@ -20,7 +23,7 @@ import kotlinx.android.synthetic.main.information_layout.*
 import kotlinx.android.synthetic.main.map_fragment.*
 import java.lang.IllegalArgumentException
 
-class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback{
+class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback {
 
     companion object {
         fun newInstance(): Fragment = MapFragment()
@@ -28,15 +31,17 @@ class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback{
 
     override val layout = R.layout.map_fragment
     lateinit var presenter: MapPresenter
-    private lateinit var map: GoogleMap
+    private lateinit var googleMap: GoogleMap
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var cluster: ClusterManager<EventItem>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheetBehavior = BottomSheetBehavior.from(coordinatorContainer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapContainer) as? SupportMapFragment
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.mapContainer) as? SupportMapFragment
 
         mapFragment?.getMapAsync(this)
     }
@@ -45,26 +50,39 @@ class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback{
         requireActivity().runOnUiThread {
             progress.isVisible = false
             events
-                .map {event -> event.eventId to LatLng(event.latitude, event.longitude) }
-                .forEach { coordinates ->
-                    val marker = map.addMarker(MarkerOptions().position(coordinates.second))
-                    marker.tag = coordinates.first
+                .map { event ->
+                    EventItem(
+                        LatLng(event.latitude, event.longitude),
+                        event.group,
+                        event.eventId
+                    )
                 }
+                .toList()
+                .let(cluster::addItems)
         }
     }
 
     override fun showLoadingError() {
-
+        Snackbar.make(progress, "Что-то пошло не так...", Snackbar.LENGTH_LONG)
+            .setAction("Повторить") {
+                presenter.onFirstViewAttach()
+            }
+            .show()
     }
 
     override fun onMapReady(map: GoogleMap?) {
         require(map != null) { IllegalArgumentException("Map is not initialized") }
-        this.map = map
+        googleMap = map
 
-        this.map.setOnMarkerClickListener { marker ->
-            presenter.onMarkerClicked(marker.tag)
+        cluster = ClusterManager(requireContext(), map)
+        cluster.setAnimation(true)
+        cluster.setOnClusterItemClickListener {
+            presenter.onMarkerClicked(it)
             true
         }
+
+        googleMap.setOnCameraIdleListener(cluster)
+        googleMap.setOnMarkerClickListener(cluster)
 
         presenter.attachView(this)
     }
@@ -76,15 +94,25 @@ class MapFragment : BaseFragment(), FilterMapView, OnMapReadyCallback{
         countryView.text = target.country
         coordinatesView.text = "${target.latitude} ${target.longitude}"
 
-        if(target.summary != null) {
+        if (target.summary != null) {
             summaryView.text = target.summary
         } else {
             summaryLabel.isVisible = false
             summaryView.isVisible = false
         }
 
-        successView.text = if(target.isSuccess) { "Да" } else { "Нет" }
-        suicideView.text = if(target.isSuicide) { "Да" } else { "Нет" }
+        successView.text = if (target.isSuccess) {
+            "Да"
+        } else {
+            "Нет"
+        }
+
+        suicideView.text = if (target.isSuicide) {
+            "Да"
+        } else {
+            "Нет"
+        }
+
         attackTypeView.text = target.attackType
         targetTypeView.text = target.targetType
         killsView.text = target.killsCount.toString()

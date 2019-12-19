@@ -14,6 +14,7 @@ import kek.foundation.terrorhistory.ui.BaseView
 interface FilterView : BaseView {
 
     fun updateFiltersList(items: List<FilterItem>)
+    fun showLoadingError(message: String?)
 
 }
 
@@ -25,48 +26,41 @@ class FilterPresenter(
     private var filter = Filter()
 
     override fun onFirstViewAttach() {
-        Log.e("TAG", "Called On First View Attach $this")
-
         filterItems.clear()
 
         interactor.getRegions(
-            success = {
-                filterItems.add(RegionsItem(it))
-                view?.updateFiltersList(filterItems)
-            },
-            error = {}
+            success = { onListLoaded(RegionsItem(it)) },
+            error = ::showLoadingError
         )
 
         interactor.getCountries(
-            success = {
-                filterItems.add(CountriesItem(it))
-                view?.updateFiltersList(filterItems)
-            },
-            error = { /*do nothing */ })
+            success = { onListLoaded(CountriesItem(it)) },
+            error = ::showLoadingError
+        )
 
         interactor.getAttackTypes(
-            success = {
-                filterItems.add(AttackTypesItem(it))
-                view?.updateFiltersList(filterItems)
-            },
-            error = { }
+            success = { onListLoaded(AttackTypesItem(it)) },
+            error = ::showLoadingError
         )
 
         interactor.getGroups(
-            success = {
-                filterItems.add(GroupsItem(it))
-                view?.updateFiltersList(filterItems)
-            },
-            error = {}
+            success = { onListLoaded(GroupsItem(it)) },
+            error = ::showLoadingError
         )
 
         interactor.getTargetTypes(
-            success = {
-                filterItems.add(TargetTypesItem(it))
-                view?.updateFiltersList(filterItems)
-            },
-            error = {}
+            success = { onListLoaded(TargetTypesItem(it)) },
+            error = ::showLoadingError
         )
+    }
+
+    private fun onListLoaded(item: FilterItem) {
+        filterItems.add(item)
+        view?.updateFiltersList(filterItems)
+    }
+
+    private fun showLoadingError(throwable: Throwable) {
+        view?.showLoadingError(throwable.message)
     }
 
     fun onCountryClicked(country: Country) {
