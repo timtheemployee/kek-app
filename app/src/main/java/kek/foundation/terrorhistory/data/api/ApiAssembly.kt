@@ -1,6 +1,7 @@
 package kek.foundation.terrorhistory.data.api
 
 import com.google.gson.Gson
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,7 +17,7 @@ class ApiAssembly(private val endPoint: String) {
         get() =
             createApi(
                 url = endPoint,
-                client = createHttpClient(interceptor = createLoggingInterceptor()),
+                client = createHttpClient(loggingInterceptor = createLoggingInterceptor()),
                 converterFactory = createGsonConverterFactory(gson = createGson()),
                 executor = createExecutor(),
                 api = Api::class.java
@@ -37,11 +38,11 @@ class ApiAssembly(private val endPoint: String) {
             it.level = HttpLoggingInterceptor.Level.BODY
         }
 
-    private fun createHttpClient(interceptor: Interceptor): OkHttpClient =
+    private fun createHttpClient(loggingInterceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(10000, TimeUnit.MILLISECONDS)
             .readTimeout(10000, TimeUnit.MILLISECONDS)
-            .addInterceptor(interceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
 
     private fun <T> createApi(

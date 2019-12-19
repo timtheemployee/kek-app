@@ -3,6 +3,7 @@ package kek.foundation.terrorhistory.presentation.filter
 import android.util.Log
 import kek.foundation.terrorhistory.data.attacktypes.AttackType
 import kek.foundation.terrorhistory.data.countries.Country
+import kek.foundation.terrorhistory.data.filter.Filter
 import kek.foundation.terrorhistory.data.groups.Group
 import kek.foundation.terrorhistory.data.region.Region
 import kek.foundation.terrorhistory.data.targettypes.TargetType
@@ -21,13 +22,13 @@ class FilterPresenter(
 ) : BasePresenter<FilterView>() {
 
     private var filterItems = arrayListOf<FilterItem>()
-    private var filter = interactor.getFilter()
+    private var filter = Filter()
 
     override fun onFirstViewAttach() {
         Log.e("TAG", "Called On First View Attach $this")
 
         filterItems.clear()
-        
+
         interactor.getRegions(
             success = {
                 filterItems.add(RegionsItem(it))
@@ -148,7 +149,7 @@ class FilterPresenter(
     }
 
     fun saveFilter() {
-        Log.e("TAG", "Saving filters here")
+        interactor.updateFilter(filter)
     }
 
 }

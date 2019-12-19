@@ -2,11 +2,15 @@ package kek.foundation.terrorhistory.data.api
 
 import kek.foundation.terrorhistory.data.attacktypes.AttackType
 import kek.foundation.terrorhistory.data.countries.Country
+import kek.foundation.terrorhistory.data.events.Event
+import kek.foundation.terrorhistory.data.filter.Filter
 import kek.foundation.terrorhistory.data.groups.Group
 import kek.foundation.terrorhistory.data.region.Region
 import kek.foundation.terrorhistory.data.targettypes.TargetType
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface Api {
 
@@ -24,4 +28,7 @@ interface Api {
 
     @GET("/target-types")
     fun getTargetTypes(): Call<List<TargetType>>
+
+    @POST("/filterBy")
+    fun getFilteredEvents(@Body filter: Filter): Call<List<Event>>
 }

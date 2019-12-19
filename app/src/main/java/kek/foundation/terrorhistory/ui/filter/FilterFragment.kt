@@ -3,6 +3,7 @@ package kek.foundation.terrorhistory.ui.filter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import kek.foundation.terrorhistory.R
 import kek.foundation.terrorhistory.data.api.Api
@@ -45,6 +46,7 @@ class FilterFragment: BaseFragment(), FilterView {
 
     override fun updateFiltersList(items: List<FilterItem>) {
         requireActivity().runOnUiThread {
+            progress.isVisible = false
             filterAdapter.items = items
         }
     }

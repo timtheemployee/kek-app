@@ -4,14 +4,13 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kek.foundation.terrorhistory.data.api.ApiAssembly
 import kek.foundation.terrorhistory.presentation.PresentationAssembly
 
 class MainActivityLifeCycleInjector(
     presentationAssembly: PresentationAssembly
 ) : Application.ActivityLifecycleCallbacks {
 
-    private val filterInjector = FragmentLifecycleInjector(presentationAssembly.filterPresenter)
+    private val dependencyInjector = FragmentLifecycleInjector(presentationAssembly)
 
     override fun onActivityPaused(activity: Activity) {
     }
@@ -20,7 +19,7 @@ class MainActivityLifeCycleInjector(
         (activity as AppCompatActivity)
             .supportFragmentManager
             .registerFragmentLifecycleCallbacks(
-                filterInjector,
+                dependencyInjector,
                 true
             )
     }
@@ -29,7 +28,7 @@ class MainActivityLifeCycleInjector(
         (activity as AppCompatActivity)
             .supportFragmentManager
             .unregisterFragmentLifecycleCallbacks(
-                filterInjector
+                dependencyInjector
             )
     }
 

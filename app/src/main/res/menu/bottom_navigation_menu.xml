@@ -13,5 +13,6 @@
         android:id="@+id/edit"
         android:title="@string/edit"
         android:icon="@drawable/edit_icon"
+        android:visible="false"
         />
 </menu>

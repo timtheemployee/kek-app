@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/spacing_8"
+    android:paddingTop="@dimen/spacing_16"
+    android:paddingEnd="@dimen/spacing_16"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Дата" />
+
+        <TextView
+            android:id="@+id/dateView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="12.01.1999"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Регион"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/regionView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Северная Америка"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Страна"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/countryView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="США"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Координаты"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/coordinatesView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="54.5545454, 43.34234234234"/>
+
+        <TextView
+            android:id="@+id/summaryLabel"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сводка"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/summaryView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Северная Америка"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Террористический акт был успешен?"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/successView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Да"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Закончился ли акт суицидом?"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/suicideView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Да"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Тип атаки"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/attackTypeView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Взрыв"/>
+
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Цель атаки"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/targetTypeView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Бизнес"/>
+
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Количество убитых"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/killsView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="22"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ответственная группировка"
+            android:layout_marginTop="@dimen/spacing_16"/>
+
+        <TextView
+            android:id="@+id/groupView"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="ISIS"/>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
