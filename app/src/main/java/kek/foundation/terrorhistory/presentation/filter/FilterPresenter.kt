@@ -1,6 +1,5 @@
 package kek.foundation.terrorhistory.presentation.filter
 
-import android.util.Log
 import kek.foundation.terrorhistory.data.attacktypes.AttackType
 import kek.foundation.terrorhistory.data.countries.Country
 import kek.foundation.terrorhistory.data.filter.Filter

@@ -23,6 +23,16 @@ class ApiAssembly(private val endPoint: String) {
                 api = Api::class.java
             )
 
+    val traceApi: TraceApi
+        get() =
+            createApi(
+                url = endPoint,
+                client = createHttpClient(loggingInterceptor = createLoggingInterceptor()),
+                converterFactory = createGsonConverterFactory(gson = createGson()),
+                executor = createExecutor(),
+                api = TraceApi::class.java
+            )
+
 
     private fun createExecutor(): Executor =
         Executors.newCachedThreadPool()
